@@ -19,7 +19,7 @@ def index():
 if __name__ == "__main__":
 	app.run()
 
-@app.route('/register', methods=['POST'])
+@app.route('registration-form', methods=['POST'])
 def register():
     username = request.form['username']
     email = request.form['email']
