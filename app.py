@@ -28,3 +28,12 @@ def register():
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"message": "Registration successful!"})
+
+@app.route('contact-form', methods=['POST'])
+def submit_feedback():
+    name = request.form['name']
+    email = request.form['email']
+    feedback = Feedback(name=name, email=email)
+    db.session.add(feedback)
+    db.session.commit()
+    return "Feedback submitted successfully!"
