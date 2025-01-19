@@ -19,15 +19,25 @@ def index():
 if __name__ == "__main__":
 	app.run()
 
-@app.route('registrationpage.html', methods=['POST'])
+@app.route('/register', methods=['POST'])
 def register():
-    username = request.form['username']
-    email = request.form['email']
-    password = request.form['password']
-    new_user = User(username=username, email=email, password=password)
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify({"message": "Registration successful!"})
+    try:
+          username = request.form['username']
+          email = request.form['email']
+          password = request.form['password']
+          new_user = User(username=username, email=email, password=password)
+          db.session.add(new_user)
+          db.session.commit()
+          return redirect(url_for('registrationpage'))
+    except Exception as e:
+          return f"An error occured: {e}",500
+
+@app.route('/registrationpage')
+def registrationpage():
+    return render_template('registrationpage.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 @app.route('contact-form', methods=['POST'])
 def submit_feedback():

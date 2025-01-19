@@ -24,3 +24,4 @@ class Feedback(db.Model):
 
     def __repr__(self):
         return f'<Feedback {self.name}>'
+
