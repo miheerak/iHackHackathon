@@ -28,9 +28,32 @@ class Feedback(db.Model):
     email = db.Column(db.String(100), nullable=False)
     message = db.Column(db.Text, nullable=False)
 
+classifier = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base")
+
+def init_db():
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('''CREATE TABLE IF NOT EXISTS analysis_results
+                      (id INTEGER PRIMARY KEY, text TEXT, result TEXT)''')
+    conn.commit()
+    conn.close()
+
 @app.route('/')
 def index():
     return render_template("index.html")
+
+@app.route('/analyze', methods=['POST'])
+def analyze_text():
+    text = request.form['text']  
+    result = classifier(text)
+    label = result[0]['label']
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO analysis_results (text, result) VALUES (?, ?)", (text, label))
+    conn.commit()
+    conn.close()
+    return render_template('result.html', text=text, analysis_result=label)
+
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -80,3 +103,4 @@ def analyze_text():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
+

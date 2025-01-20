@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=2.0">
     <title>PlaySafe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
 </head>
 <body>
     <header>
@@ -17,7 +16,6 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#register">Register</a></li>
                 <li><a href="#contact">Contact</a></li>
-                
             </ul>
         </nav>
     </header>
@@ -31,15 +29,15 @@
         <section id="features">
             <h2>Features</h2>
             <ul>
-                <li>Safe and Secure Gaming: Gaming is exponentially growing worldwide. With fast and easy internet availability, gamers all over the world have found easy ways to network and interact with other gamers and individuals over the world, whom they can display their skills to. For younger players especially, a secure gaming space is very important to shield them from inappropriate content, online predators and cyberbullying. Thus, safety and positivity on the gaming platforms becomes extremely crucial to ensure that players are enjoying their gaming experiences without the fear of harassment, exploitation or cheating. It helps foster a sense of well-being and security, encouraging players to positively engage with the game and community.</li>
-                <li>Distinguish Gaming from Gambling: To understand gaming better, we also must know that it is not same as gambling. While gaming involves participation in state sanctioned wagering, gambling is when bets are placed on online platforms or locations that are not permitted in the state. Gaming may or may not involve financial transactions but gambling surely does. gaming is the outcome achieved by skill whereas gambling is when it is achieved by chance. We thus recommend all our fellow community members to not indulge into any sort of gambling on our platform, which failing to do so will result into legal repurcusions. </li>
-                <li>Promote Responsible Practices: We urge our community members to ensure that they do not cause any kind of bullying, harrassment or trouble to other members in the community and help make this platform a safe space for all their fellow mates! Failing to do so will result into legal repurcusions. </li>
+                <li>Safe and Secure Gaming: Gaming is exponentially growing worldwide...</li>
+                <li>Distinguish Gaming from Gambling: To understand gaming better...</li>
+                <li>Promote Responsible Practices: We urge our community members...</li>
             </ul>
         </section>
         
         <section id="about">
             <h2>About Us</h2>
-            <p>PlaySafe is an online gaming platform that along with providing new-age online games to gamers and newbies, also promises and prioritieses a safe gaming experience to ensure a secure, thriving and inclusive gaming environment!</p>
+            <p>PlaySafe is an online gaming platform...</p>
         </section>
 
         <section id="register">
@@ -68,12 +66,15 @@
                 <button type="submit">Submit</button>
             </form>
         </section>
-        <form id="analyzeForm">
-            <textarea id="contentInput" placeholder="Enter text..."></textarea>
-            <button type="submit">Analyze</button>
-        </form>
-        <div id="result"></div>
         
+        <!-- Analyze Form Section -->
+        <section id="analyze-section">
+            <h2>Analyze Text for Bullying or Harassment</h2>
+            <form action="/analyze" method="POST">
+                <textarea id="contentInput" name="text" placeholder="Enter text..." required></textarea>
+                <button type="submit">Analyze</button>
+            </form>
+        </section>
 
     </main>
 
@@ -82,6 +83,5 @@
     </footer>
 
     <script src="script.js"></script>
-    
 </body>
 </html>

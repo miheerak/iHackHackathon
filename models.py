@@ -40,3 +40,11 @@ class ReportedContent(Base):
 def init_db():
     engine = create_engine("sqlite:///database.db")
     Base.metadata.create_all(engine)
+
+class AnalysisResult(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(500))
+    result = db.Column(db.String(100))
+
+    def __repr__(self):
+        return f'<AnalysisResult {self.id} {self.result}>'

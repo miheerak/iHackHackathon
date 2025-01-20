@@ -51,4 +51,23 @@ document.getElementById("analyzeForm").addEventListener("submit", async (event) 
         ? `Flagged! Blockchain Hash: ${result.blockchain_hash}`
         : "Not flagged.";
 });
+document.getElementById('feedback-form').addEventListener('submit', function(e) {
+    e.preventDefault();  // Prevent default form submission
+
+    const text = document.getElementById('text').value;
+
+    fetch('/analyze', {
+        method: 'POST',
+        body: new URLSearchParams({
+            'text': text
+        }),
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+    .then(response => response.text())  // Get the response as text
+    .then(data => {
+        document.getElementById('analysis-result').innerText = "Analysis Result: " + data;  // Show result on the page
+    });
+});
 
