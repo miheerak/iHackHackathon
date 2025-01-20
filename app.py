@@ -7,29 +7,11 @@ from models import init_db
 from database import add_reported_content
 from ml_pipeline import analyze_content
 from blockchain_integration import store_to_blockchain
+from transformers import pipeline
+import sqlite3
 
-basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-
-class User(db.Model):
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
-
-class Feedback(db.Model):
-    __tablename__ = 'feedback'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False)
-    email = db.Column(db.String(100), nullable=False)
-    message = db.Column(db.Text, nullable=False)
-
 classifier = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base")
-
 def init_db():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
@@ -37,6 +19,8 @@ def init_db():
                       (id INTEGER PRIMARY KEY, text TEXT, result TEXT)''')
     conn.commit()
     conn.close()
+
+init_db()
 
 @app.route('/')
 def index():
@@ -54,6 +38,26 @@ def analyze_text():
     conn.close()
     return render_template('result.html', text=text, analysis_result=label)
 
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(100), nullable=False)
+
+class Feedback(db.Model):
+    __tablename__ = 'feedback'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    message = db.Column(db.Text, nullable=False)
 
 @app.route('/register', methods=['POST'])
 def register():
