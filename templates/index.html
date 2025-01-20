@@ -16,6 +16,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#register">Register</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="#analyze-content">Analyze</a></li>
             </ul>
         </nav>
     </header>
@@ -43,37 +44,37 @@
         <section id="register">
             <h2>Register</h2>
             <p>Enter the required details to register into the online gaming community!</p>
-            <form action="/register" method="POST">
+            <form action="{{ url_for('register') }}" method="POST">
+                {{ register_form.hidden_tag() }}
                 <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+                {{ register_form.username() }}
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                {{ register_form.email() }}
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                <button type="submit">Submit</button>
+                {{ register_form.password() }}
+                <button type="submit">Register</button>
             </form>
         </section>
         
         <section id="contact">
             <h2>Contact Us</h2>
-            <form action="contact-form" method="POST">
+            <form action="{{ url_for('submit_feedback') }}" method="POST">
+                {{ feedback_form.hidden_tag() }}
                 <label for="name">Name:</label>
-                <input type="text" id="name" required>
-                <label for="feedback">Feedback:</label>
-                <input type="text" id="feedback" required>
+                {{ feedback_form.name() }}
                 <label for="email">Email:</label>
-                <input type="email" id="email" required>
-                <button type="submit">Submit</button>
+                {{ feedback_form.email() }}
+                <label for="feedback">Feedback:</label>
+                {{ feedback_form.feedback() }}
+                <button type="submit">Submit Feedback</button>
             </form>
         </section>
         
-        <!-- Analyze Form Section -->
-        <section id="analyze-section">
+        
+        <section id="analyze-content">
             <h2>Analyze Text for Bullying or Harassment</h2>
-            <form action="/analyze" method="POST">
-                <textarea id="contentInput" name="text" placeholder="Enter text..." required></textarea>
-                <button type="submit">Analyze</button>
-            </form>
+            <p>Use this tool to analyze the sentiment and emotion of your text.</p>
+            <a href="{{ url_for('analyze') }}" class="button">Start Analysis</a>
         </section>
 
     </main>

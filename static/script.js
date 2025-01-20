@@ -52,7 +52,7 @@ document.getElementById("analyzeForm").addEventListener("submit", async (event) 
         : "Not flagged.";
 });
 document.getElementById('feedback-form').addEventListener('submit', function(e) {
-    e.preventDefault();  // Prevent default form submission
+    e.preventDefault();  
 
     const text = document.getElementById('text').value;
 
@@ -65,9 +65,9 @@ document.getElementById('feedback-form').addEventListener('submit', function(e) 
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     })
-    .then(response => response.text())  // Get the response as text
+    .then(response => response.text())  
     .then(data => {
-        document.getElementById('analysis-result').innerText = "Analysis Result: " + data;  // Show result on the page
+        document.getElementById('analysis-result').innerText = "Analysis Result: " + data; 
     });
 });
 

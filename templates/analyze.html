@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyze Text</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Analyze Text</h1>
+    <form action="{{ url_for('analyze') }}" method="POST">
+        {{ form.hidden_tag() }} 
+
+        <label for="text">Text to Analyze:</label>
+        {{ form.text() }} 
+        
+        <button type="submit">Analyze</button>
+    </form>
+</body>
+</html>

@@ -6,7 +6,7 @@ body {
 }
 
 header {
-    background: #99079b;
+    background: #fa0376;
     color: #daf71f;
     padding: 1rem 0;
     text-align: center;
@@ -23,7 +23,7 @@ header nav ul li {
 }
 
 header nav ul li a {
-    color: #830e9b;
+    color: #8fe9f3;
     text-decoration: navajowhite;
 }
 
@@ -58,7 +58,7 @@ button:hover {
 footer {
     text-align: center;
     background: #333;
-    color: #fff;
+    color: #f90404;
     padding: 2rem 0;
     margin-top: 2rem;
 }
