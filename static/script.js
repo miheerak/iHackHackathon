@@ -37,3 +37,18 @@ app.post('/templates/registrationpage.html', (req, res) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
+
+document.getElementById("analyzeForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const content = document.getElementById("contentInput").value;
+    const response = await fetch("/api/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content }),
+    });
+    const result = await response.json();
+    document.getElementById("result").innerHTML = result.is_flagged
+        ? `Flagged! Blockchain Hash: ${result.blockchain_hash}`
+        : "Not flagged.";
+});
+

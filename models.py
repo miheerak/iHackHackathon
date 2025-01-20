@@ -1,6 +1,10 @@
 #defines database schema
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Column, Integer, String, Text, create_engine, Boolean, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+import datetime
 
 db = SQLAlchemy()
 
@@ -23,3 +27,16 @@ class Feedback(db.Model):
 
     def __repr__(self):
         return f'<Feedback {self.name}>'
+
+Base = declarative_base()
+
+class ReportedContent(Base):
+    __tablename__ = "reported_content"
+    id = Column(Integer, primary_key=True)
+    content = Column(Text, nullable=False)
+    blockchain_hash = Column(String(256), nullable=True)
+    flagged_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+def init_db():
+    engine = create_engine("sqlite:///database.db")
+    Base.metadata.create_all(engine)

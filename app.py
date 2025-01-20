@@ -1,8 +1,12 @@
 #main application, handles backend logic
 
 import os
-from flask import Flask, request, url_for, render_template, redirect
+from flask import Flask, request, url_for, render_template, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from models import init_db
+from database import add_reported_content
+from ml_pipeline import analyze_content
+from blockchain_integration import store_to_blockchain
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
@@ -59,7 +63,20 @@ def submit_feedback():
         return f"An error occurred: {e}", 500
 
 if __name__ == '__main__':
-    # Create database tables
     with app.app_context():
         db.create_all()
+    app.run(debug=True)
+
+@app.route("/api/analyze", methods=["POST"])
+def analyze_text():
+    content = request.json.get("content")
+    result = analyze_content(content)
+    if result["is_flagged"]:
+        blockchain_hash = store_to_blockchain(content)
+        add_reported_content(content, blockchain_hash)
+        result["blockchain_hash"] = blockchain_hash
+    return jsonify(result)
+
+if __name__ == "__main__":
+    init_db()
     app.run(debug=True)
